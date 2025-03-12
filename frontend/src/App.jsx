@@ -2,7 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { uploadData, getData }  from require("../index.js")
+import { uploadData, getData }  from '../index.js'
 
 
 function App() {
