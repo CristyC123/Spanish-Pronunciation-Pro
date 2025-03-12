@@ -33,7 +33,7 @@ const uploadData = async () => {
   }
 }
 
-const x = async () => {
+const getData = async () => {
   try {
     const collectionRef = collection(db, "reciepts");
     const finalData = [];
@@ -49,7 +49,7 @@ const x = async () => {
     console.log('Error In Fetching Data');
   }
 }
-getData = x;
+getData = 15;
 exports = {
   app,
   uploadData,
