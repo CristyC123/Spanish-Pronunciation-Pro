@@ -1,6 +1,6 @@
-import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, doc, setDoc, getDocs } from 'firebase/firestore';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDocs } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
