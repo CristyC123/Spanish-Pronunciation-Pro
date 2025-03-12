@@ -51,7 +51,7 @@ const getData = async () => {
 }
 
 
-module.exports = {
+exports = {
   app,
   uploadData,
   getData
