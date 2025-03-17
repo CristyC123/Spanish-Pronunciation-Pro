@@ -1,10 +1,11 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDocs } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getFirestore, doc, setDoc, getDocs, collection, query } from "firebase/firestore";
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBbYT2LDueQRIToeNPMGYP3DO9fpKPOGhU",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "spanish-pronunciation-pro.firebaseapp.com",
   projectId: "spanish-pronunciation-pro",
   storageBucket: "spanish-pronunciation-pro.firebasestorage.app",
@@ -13,10 +14,10 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(firebaseApp);
-const db = getFirestore(firebaseApp);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-const uploadData = async () => {
+export async function uploadData() {
   const data = {
     key1: "testblurb",
     key2: 12345,
@@ -27,13 +28,12 @@ const uploadData = async () => {
     const document = doc(db, "reciepts", "rJswHKF8XnzbhBB1Bd5l");
     let dataUpdated = await setDoc(document, data);
 
-
   } catch (error) {
     console.log('error in uploading data')
   }
 }
 
-const getData = async () => {
+export async function getData() {
   try {
     const collectionRef = collection(db, "reciepts");
     const finalData = [];
@@ -57,13 +57,13 @@ exports = {
 }
 
 onAuthStateChanged(auth, user => {
-if(user != null) 
-{
-  console.log('logged in!');
-}
-else 
-{
-  console.log('no user');
-}
+  if(user != null) 
+  {
+    console.log('logged in!');
+  }
+  else 
+  {
+    console.log('no user');
+  }
 
-})
+});
