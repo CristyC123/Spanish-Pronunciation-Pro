@@ -1,14 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { uploadData, getData }  from '../index.js'
-
+import { getData } from '../index.js'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [data, setData] = useState(null)
 
-  const displayValue = getData();
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getData()
+      setData(result)
+    }
+    fetchData()
+  }, [])
+
   return (
     <>
       <div>
@@ -19,7 +26,7 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>data is:   {displayValue}</h1>
+      <h1>data is: {data ? JSON.stringify(data) : 'Loading...'}</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}

@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDocs } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+import { getFirestore, doc, setDoc, getDocs, collection, query } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -13,8 +13,8 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(firebaseApp);
-const db = getFirestore(firebaseApp);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 const uploadData = async () => {
   const data = {
@@ -26,20 +26,18 @@ const uploadData = async () => {
   try {
     const document = doc(db, "reciepts", "rJswHKF8XnzbhBB1Bd5l");
     let dataUpdated = await setDoc(document, data);
-
-
   } catch (error) {
-    console.log('error in uploading data')
+    console.log('error in uploading data');
   }
 }
 
-const x = async () => {
+const getData = async () => {
   try {
     const collectionRef = collection(db, "reciepts");
     const finalData = [];
     const q = query(collectionRef);
 
-    const docSnap = await getDocs();
+    const docSnap = await getDocs(q);
 
     docSnap.forEach((doc) => {
       finalData.push(doc.data());
@@ -49,21 +47,13 @@ const x = async () => {
     console.log('Error In Fetching Data');
   }
 }
-getData = x;
-exports = {
-  app,
-  uploadData,
-  getData
-}
+
+export { app, uploadData, getData };
 
 onAuthStateChanged(auth, user => {
-if(user != null) 
-{
-  console.log('logged in!');
-}
-else 
-{
-  console.log('no user');
-}
-
-})
+  if (user != null) {
+    console.log('logged in!');
+  } else {
+    console.log('no user');
+  }
+});
