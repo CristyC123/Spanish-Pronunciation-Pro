@@ -49,7 +49,7 @@ const getData = async () => {
     console.log('Error In Fetching Data');
   }
 }
-getData = 15;
+
 exports = {
   app,
   uploadData,
