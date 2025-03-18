@@ -17,7 +17,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-export async function uploadData() {
+export const uploadData = async () => {
   const data = {
     key1: "testblurb",
     key2: 12345,
@@ -31,39 +31,35 @@ export async function uploadData() {
   } catch (error) {
     console.log('error in uploading data')
   }
-}
+};
 
-export async function getData() {
+export const getData = async () => {
   try {
     const collectionRef = collection(db, "reciepts");
     const finalData = [];
     const q = query(collectionRef);
 
-    const docSnap = await getDocs();
+    const docSnap = await getDocs(q);
 
-    docSnap.forEach((doc) => {
-      finalData.push(doc.data());
+    docSnap.forEach((docItem) => {
+      finalData.push(docItem.data());
     });
     return finalData;
   } catch (error) {
-    console.log('Error In Fetching Data');
+    console.log('Error In Fetching Data', error);
   }
-}
+};
 
-exports = {
-  app,
-  uploadData,
-  getData
-}
+export { app };
 
-onAuthStateChanged(auth, user => {
-  if(user != null) 
-  {
-    console.log('logged in!');
-  }
-  else 
-  {
-    console.log('no user');
-  }
+// onAuthStateChanged(auth, user => {
+//   if(user != null) 
+//   {
+//     console.log('logged in!');
+//   }
+//   else 
+//   {
+//     console.log('no user');
+//   }
 
-});
+// });
