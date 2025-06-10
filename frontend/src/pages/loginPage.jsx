@@ -7,15 +7,39 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/firebase.js';
 
 import loginImage from '@/assets/images/login2.png';
 
+import api from "../api.js";
+import {useState} from 'react';
 
-function LoginPage() {
+
+function LoginPage({}) {
   const navigate = useNavigate();
+  const [cred, setCred] = useState({
+    email: '',
+    password: '',
+  });
 
-  const handleLoginClick = () => {
-    navigate('/dashboard');
+  const handleChange = (e) => {
+    setCred(
+      {...cred, 
+        [e.target.name]: e.target.value
+      })
+  }
+
+  const handleLoginClick = async () => {
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, cred.email, cred.password)
+
+      navigate('/dashboard');
+
+      } catch(error) {
+        console.log(error)
+      }
   };
 
   const handleGoogleClick = () => {
@@ -47,7 +71,7 @@ function LoginPage() {
              <CardContent className="space-y-4">
                <div className="space-y-2">
                  <Label htmlFor="email">Email</Label>
-                 <Input id="email" type="email" placeholder="" required />
+                 <Input id="email" type="email" placeholder="" name ="email" value = {cred.email} onChange = {handleChange} required />
                </div>
                <div className="space-y-2">
                  <div className="flex items-center justify-between">
@@ -56,7 +80,7 @@ function LoginPage() {
                      Forgot password?
                    </Link>
                  </div>
-                 <Input id="password" type="password" placeholder="" required />
+                 <Input id="password" type="password" placeholder="" name ="password" value = {cred.password} onChange = {handleChange} required />
                </div>
              </CardContent>
              <CardFooter className="flex flex-col space-y-3 pt-6">
